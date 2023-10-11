@@ -1,0 +1,77 @@
+---
+title: "Problema2_con_enunciado"
+author: "Sergio Canto García"
+date: "2023-10-11"
+output: html_document
+---
+
+```{r librerías y formulas que se usarán}
+source("teoriadecision_funciones_incertidumbre.R")
+library(kableExtra)
+```
+
+## PROBLEMA 2:
+
+La federación nacional española de triatlón debe presentar la lista de deportistas convocadas para participar en el campeonato femenino europeo de triatlón.
+
+Debe llevar 5 personas, y hasta ahora ya tiene 4 seleccionadas. Para el último puesto que queda disponible, tiene tres deportistas candidatas, las cuales tienen puntuacines en cada una de las disciplinas (natación, carrera a pie y ciclismo calculadas sobre 100) recogidas en la siguiente tabla:
+
+```{r obtencion de datos}
+datos <- matrix(data = c(55,78,81,66,77,74,80,62,73), nrow = 3, byrow = T)
+rownames(datos) <- c("Rocio Martin", "Clara Gonzalez", "Carmen Puerto")
+colnames(datos) <- c("Natacion", "Carrera a pie", "Ciclismo")
+datos
+```
+Decidir qué atleta debe ser seleccionada para la competición.
+
+**Solución**
+
+Estamos ante un problema de decisión de un solo decisor, que tiene un modelo de beneficios (caso favorable).
+Con los datos de la tabla anterior, pasamos a resolver el problema con los diferentes criterios:
+
+
+
+```{r resolucion del problema}
+#Criterio de Wald
+
+wald = criterio.Wald(datos,T)
+wald
+
+# Criterio Optimista
+
+optimista = criterio.Optimista(datos,T)
+optimista
+
+# Criterio Hurwicz
+
+hurwicz = criterio.Hurwicz(datos, 0.5, T)
+hurwicz
+
+
+# Criterio Savage
+
+savage = criterio.Savage(datos,T)
+savage
+
+# Criterio Laplace
+
+laplace = criterio.Laplace(datos,T)
+laplace
+
+# Criterio Punto Ideal
+
+pideal = criterio.PuntoIdeal(datos,T)
+pideal
+
+#Todos los criterios
+
+todos = criterio.Todos(datos, alfa=0.5, favorable = T)
+todos
+
+```
+
+Todos los criterios empleados recomiendan convocar a Clara Gonzalez, a excepción del criterio Optimista, que recomienda a Rocio Martin, ya que el criterio optimista se pone en la mejor situación posible, en la que Rocio, en este caso, haria una gran parte de ciclismo, la cual seria determinante.
+
+Finalmente, se selecciona a Clara Gonzalez.
+
+
