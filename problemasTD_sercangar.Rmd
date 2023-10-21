@@ -1,0 +1,166 @@
+---
+title: "Problemas TD"
+author: "Sergio Canto García"
+date: "2023-10-11"
+output: html_document
+---
+
+```{r}
+source("teoriadecision_funciones_incertidumbre.R")
+library(kableExtra)
+```
+
+## PROBLEMA 1:
+```{r}
+tablaSCG=crea.tablaX(c(2,5,7,2,-2,9,5,3,4,5,3,1), numalternativas = 3,numestados = 4)
+tablaSCG
+```
+
+```{r CASO FAVORABLE}
+#Criterio de Wald
+
+waldSCG = criterio.Wald(tablaSCG,T)
+waldSCG
+
+# Criterio Optimista
+
+optimistaSCG = criterio.Optimista(tablaSCG,T)
+optimistaSCG
+
+# Criterio Hurwicz
+
+hurwiczSCG = criterio.Hurwicz(tablaSCG, 0.5, T)
+hurwiczSCG
+
+
+# Criterio Savage
+
+savageSCG = criterio.Savage(tablaSCG,T)
+savageSCG
+
+# Criterio Laplace
+
+laplaceSCG = criterio.Laplace(tablaSCG,T)
+laplaceSCG
+
+# Criterio Punto Ideal
+
+pidealSCG = criterio.PuntoIdeal(tablaSCG,T)
+pidealSCG
+
+#Todos los criterios
+
+todosSCG = criterio.Todos(tablaSCG, alfa=0.5, favorable = T)
+todosSCG
+
+```
+
+En caso favorable, selecciono la opción d1
+
+```{r CASO DESFAVORABLE}
+#Criterio de Wald
+
+waldSCG2 = criterio.Wald(tablaSCG,F)
+waldSCG2
+
+# Criterio Optimista
+
+optimistaSCG2 = criterio.Optimista(tablaSCG,F)
+optimistaSCG2
+
+# Criterio Hurwicz
+
+hurwiczSCG2 = criterio.Hurwicz(tablaSCG, 0.5, F)
+hurwiczSCG2
+
+
+# Criterio Savage
+
+savageSCG2 = criterio.Savage(tablaSCG,F)
+savageSCG2
+
+# Criterio Laplace
+
+laplaceSCG2 = criterio.Laplace(tablaSCG,F)
+laplaceSCG2
+
+# Criterio Punto Ideal
+
+pidealSCG2 = criterio.PuntoIdeal(tablaSCG,F)
+pideal
+
+#Todos los criterios
+
+todosSCG2 = criterio.Todos(tablaSCG, alfa=0.5, favorable = F)
+todosSCG2
+
+```
+ 
+En caso desfavorable selecciono la opción d2
+
+
+## PROBLEMA 2:
+
+La federación nacional española de triatlón debe presentar la lista de deportistas convocadas para participar en el campeonato femenino europeo de triatlón.
+
+Debe llevar 5 personas, y hasta ahora ya tiene 4 seleccionadas. Para el último puesto que queda disponible, tiene tres deportistas candidatas, las cuales tienen puntuaciones en cada una de las disciplinas (natación, maratón y ciclismo, calculadas sobre 100). Rocio Martín es una atleta extremeña que en natación tiene una puntuación de 55, en maratón 78 y en ciclismo 81. Clara González, de Barcelona, tiene unas puntuaciones de 66 en natación, 77 en maratón y 74 en ciclismo. Carmen Puerto tiene puntuación de 80 en natación, 62 en maratón y 73 en ciclismo. 
+Decidir qué atleta debe ser seleccionada para la competición.
+
+**Solución**
+1. Crear la matriz de datos:
+```{r}
+datosSCG <- matrix(data = c(55,78,81,66,77,74,80,62,73), nrow = 3, byrow = T)
+rownames(datosSCG) <- c("Rocio Martin", "Clara Gonzalez", "Carmen Puerto")
+colnames(datosSCG) <- c("Natacion", "Carrera a pie", "Ciclismo")
+datosSCG
+```
+
+Estamos ante un problema de decisión de un solo decisor, que tiene un modelo de beneficios (caso favorable).
+Con los datos de la tabla anterior
+
+
+
+```{r}
+#Criterio de Wald
+
+waldSCG = criterio.Wald(datosSCG,T)
+waldSCG
+
+# Criterio Optimista
+
+optimistaSCG = criterio.Optimista(datosSCG,T)
+optimistaSCG
+
+# Criterio Hurwicz
+
+hurwiczSCG = criterio.Hurwicz(datosSCG, 0.5, T)
+hurwiczSCG
+
+
+# Criterio Savage
+
+savageSCG = criterio.Savage(datosSCG,T)
+savageSCG
+
+# Criterio Laplace
+
+laplaceSCG = criterio.Laplace(datosSCG,T)
+laplaceSCG
+
+# Criterio Punto Ideal
+
+pidealSCG = criterio.PuntoIdeal(datosSCG,T)
+pidealSCG
+
+#Todos los criterios
+
+todosSCG = criterio.Todos(datosSCG, alfa=0.5, favorable = T)
+todosSCG
+
+```
+
+Todos los criterios empleados recomiendan convocar a Clara Gonzalez, a excepción del criterio Optimista, que recomienda a Rocio Martin, ya que el criterio optimista se pone en la mejor situación posible, en la que Rocio, en este caso, haria una gran parte de ciclismo, la cual seria determinante.
+
+Finalmente, se selecciona a Clara Gonzalez.
+
+
